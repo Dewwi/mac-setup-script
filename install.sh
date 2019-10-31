@@ -4,13 +4,11 @@
 important_casks=(
   authy
   dropbox
-  #google-chrome
+  google-chrome
   hyper
-  jetbrains-toolbox
   istat-menus
   spotify
   franz
-  visual-studio-code
   slack
 )
 
@@ -20,7 +18,6 @@ brews=(
   awscli
   "bash-snippets --without-all-tools --with-cryptocurrency --with-stocks --with-weather"
   bat
-  #cheat
   coreutils
   dfc
   exa
@@ -35,7 +32,7 @@ brews=(
   "gnu-sed --with-default-names"
   go
   gpg
-  haskell-stack
+  #haskell-stack
   hh
   #hosts
   htop
@@ -76,19 +73,16 @@ brews=(
   #volumemixer
   "wget --with-iri"
   xsv
-  youtube-dl
 )
 
 casks=(
   aerial
   adobe-acrobat-pro
-  airdroid
-  android-platform-tools
+  #airdroid
   cakebrew
   cleanmymac
   docker
   expressvpn
-  firefox
   geekbench
   google-backup-and-sync
   github
@@ -109,9 +103,9 @@ casks=(
   private-eye
   satellite-eyes
   sidekick
-  skype
+  #skype
   sloth
-  steam
+  #steam
   transmission
   transmission-remote-gui
   xquartz
@@ -153,14 +147,6 @@ git_configs=(
   "user.name pathikrit"
   "user.email ${git_email}"
   "user.signingkey ${gpg_key}"
-)
-
-vscode=(
-  alanz.vscode-hie-server
-  rebornix.Ruby
-  redhat.java
-  rust-lang.rust
-  scalameta.metals
 )
 
 fonts=(
@@ -262,15 +248,25 @@ prompt "Upgrade bash"
 brew install bash bash-completion2 fzf
 sudo bash -c "echo $(brew --prefix)/bin/bash >> /private/etc/shells"
 #sudo chsh -s "$(brew --prefix)"/bin/bash
-# Install https://github.com/twolfson/sexy-bash-prompt
-touch ~/.bash_profile #see https://github.com/twolfson/sexy-bash-prompt/issues/51
-(cd /tmp && git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt && cd sexy-bash-prompt && make install) && source ~/.bashrc
+
+touch ~/.bash_profile 
+#see https://github.com/twolfson/sexy-bash-prompt/issues/51
+# (cd /tmp && git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt && cd sexy-bash-prompt && make install) && source ~/.bashrc
 
 echo "
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+alias ls='ls -lah'
+alias ll='ls -lah'
 alias del='mv -t ~/.Trash/'
-alias ls='exa -l'
+#alias ls='exa -l'
 alias cat=bat
+# updates PATH for the Google Cloud SDK.
+if [ -f '/Users/davidlequin/exec -l /bin/bash/google-cloud-sdk/path.bash.inc' ]; then . '/Users/davidlequin/exec -l /bin/bash/google-cloud-sdk/path.bash.inc'; fi
+# enables shell command completion for gcloud.
+if [ -f '/Users/davidlequin/exec -l /bin/bash/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/davidlequin/exec -l /bin/bash/google-cloud-sdk/completion.bash.inc'; fi
 " >> ~/.bash_profile
+cat bash_promt >> ~/.bash_profile
 
 prompt "Setting up xonsh"
 sudo bash -c "which xonsh >> /private/etc/shells"
@@ -284,7 +280,6 @@ prompt "Install secondary packages"
 install 'pip3 install --upgrade' "${pips[@]}"
 install 'gem install' "${gems[@]}"
 install 'npm install --global' "${npms[@]}"
-install 'code --install-extension' "${vscode[@]}"
 brew tap caskroom/fonts
 install 'brew cask install' "${fonts[@]}"
 
