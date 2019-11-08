@@ -130,8 +130,8 @@ npms=(
   n
 )
 
-gpg_key='3E219504'
-git_email='pathikritbhowmick@msn.com'
+#gpg_key='3E219504'
+git_email='david.lequin@gmail.com'
 git_configs=(
   "branch.autoSetupRebase always"
   "color.ui auto"
@@ -146,7 +146,6 @@ git_configs=(
   "rerere.enabled true"
   "user.name pathikrit"
   "user.email ${git_email}"
-  "user.signingkey ${gpg_key}"
 )
 
 fonts=(
@@ -154,7 +153,6 @@ fonts=(
   font-source-code-pro
 )
 
-JDK_VERSION=amazon-corretto@1.8.222-10.1
 
 ######################################## End of app list ########################################
 set +e
@@ -223,12 +221,6 @@ install 'brew cask install' "${important_casks[@]}"
 prompt "Install packages"
 install 'brew_install_or_upgrade' "${brews[@]}"
 brew link --overwrite ruby
-
-prompt "Install JDK=${JDK_VERSION}"
-curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
-jabba install ${JDK_VERSION}
-jabba alias default ${JDK_VERSION}
-java -version
 
 prompt "Set git defaults"
 for config in "${git_configs[@]}"
